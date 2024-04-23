@@ -3,29 +3,45 @@ import {
   Widget,
   Utils,
   Variable,
+  App,
 } from "../../imports.js";
 import { NierButton, NierButtonGroup } from "../../nier/buttons.js";
 
 import {
-  SCREEN_HEIGHT,
   arradd,
   arrremove,
 } from "../../util.js";
 
+import {
+  scaledScreenHeight,
+} from "../../scaling.js";
+
 const { Box, Label,Scrollable, Icon } = Widget;
 const { Pango } = imports.gi;
+
+const { execAsync } = Utils;
 
 const Gio = imports.gi.Gio;
 
 function searchAppInfo(searchString) {
-  const appInfos = Gio.AppInfo.get_all("Application");
-  console.log("applications :: ", appInfos);
+  const appInfos = Gio.AppInfo.get_all();
+  // console.log("applications :: ", appInfos);
 
+  let resultCount = 0;
   const filteredAppInfos = appInfos.filter((appInfo) => {
+    if (resultCount >= 10) 
+      return false;
+
     const name = appInfo.get_display_name().toLowerCase();
     const description = appInfo.get_description()?.toLowerCase();
     const searchTerm = searchString.toLowerCase();
-    return name.includes(searchTerm) || description?.includes(searchTerm);
+    let result =  name.includes(searchTerm) || description?.includes(searchTerm);
+    
+    if (result) {
+      resultCount++;
+    }
+
+    return result;
   });
 
   return filteredAppInfos;
@@ -34,32 +50,43 @@ function searchAppInfo(searchString) {
 export const AppLauncher = ({
   allApps = Variable(Gio.app_info_get_all(), {}),
   assetsDir = null
-}) =>
-  Box({
+}) => {
+
+  const entryWidget = Widget.Entry({
+    classNames: ["app-launcher-search"],
+    placeholderText: "search apps",
+    text: "blabla",
+    visibility: true,
+    
+    onChange: ({ text }) => {
+      console.log("text changed :: ", text);
+      allApps.setValue(searchAppInfo(text));
+    },
+    onAccept: ({ text }) => {
+      console.log("text accepted :: ", text);
+      allApps.value[0].launch([], null);
+      App.toggleWindow("settings");
+      // Utils.timeout(1100, () => {
+      //   execAsync(`ags -b bg_settings -q`).catch(print).then(print)
+      // })
+    },
+    setup: (self) => {
+    //   self.focus();
+    },
+  });
+
+  return Box({
     vertical: true,
     classNames: ["app-launcher"],
     children: [
-      Widget.Entry({
-        classNames: ["app-launcher-search"],
-        placeholderText: "search apps",
-        text: "",
-        visibility: true,
-        onChange: ({ text }) => {
-          console.log("text changed :: ", text);
-          allApps.setValue(searchAppInfo(text));
-        },
-        onAccept: ({ text }) => {
-          console.log("text accepted :: ", text);
-          allApps.value[0].launch([], null);
-        },
-      }),
+      entryWidget,
       Scrollable({
         vscroll: "always",
         hscroll: "never",
         hexpand: true,
         hpack: "fill",
         classNames: ["app-launcher-scroll"],
-        css: `min-height: ${Math.round(SCREEN_HEIGHT/3)}px;`,
+        css: `min-height: ${Math.round(scaledScreenHeight/3)}px;`,
 
         child: Box({
           vertical: true,
@@ -69,7 +96,7 @@ export const AppLauncher = ({
                 [
                   allApps,
                   (self) => {
-                    console.log("allApps changed :: ", allApps.value);
+                    // console.log("allApps changed :: ", allApps.value);
                     let buttons = self.children[1];
                     buttons.children = allApps.value.map((app) => {
                       return NierButton({
@@ -79,11 +106,11 @@ export const AppLauncher = ({
                         labelOveride: (label, font_size, max_label_chars) =>
                           Box({
                             children: [
-                              Icon({
-                                classNames: ["app-launcher-icon"],
-                                size: 20,
-                                icon: app.get_icon()?.to_string(),
-                              }),
+                              // Icon({
+                              //   classNames: ["app-launcher-icon"],
+                              //   size: 20,
+                              //   icon: app.get_icon()?.to_string(),
+                              // }),
                               Label({
                                 classNames: ["app-launcher-label"],
                                 css: `font-size: ${font_size}px;`,
@@ -130,6 +157,10 @@ export const AppLauncher = ({
               setup: (self) =>
                 Utils.timeout(1, () => {
                   let buttons = self.children[1];
+                  
+                  entryWidget.grab_focus();``
+
+
                   buttons.children = allApps.value.map((app) => {
                     return NierButton({
                       useAssetsDir: assetsDir,
@@ -138,11 +169,11 @@ export const AppLauncher = ({
                       labelOveride: (label, font_size, max_label_chars) =>
                         Box({
                           children: [
-                            Icon({
-                              classNames: ["app-launcher-icon"],
-                              size: 20,
-                              icon: app.get_icon()?.to_string(),
-                            }),
+                            // Icon({
+                            //   classNames: ["app-launcher-icon"],
+                            //   size: 20,
+                            //   icon: app.get_icon()?.to_string(),
+                            // }),
                             Label({
                               classNames: ["app-launcher-label"],
                               wrap: true,
@@ -189,3 +220,4 @@ export const AppLauncher = ({
       }),
     ],
   });
+}

@@ -1,7 +1,7 @@
 import { Widget, App, Utils } from "../../imports.js";
 import { NierButtonGroup, NierButton } from "../../nier/buttons.js";
 import { settings_title_bottom, settings_title_top } from "../../scaling.js";
-import { SCREEN_WIDTH, SCREEN_HEIGHT, arradd, arrremove, get_cursor, css} from "../../util.js";
+import { arradd, arrremove, get_cursor, css} from "../../util.js";
 import { BluetoothGroup } from "../../widgets/bluetooth_group.js";
 import { Info } from "../../widgets/info.js";
 
@@ -9,6 +9,12 @@ import { VolumeGroup } from "../../widgets/volume_group.js";
 import { WifiGroup } from "../../widgets/wifi_group.js";
 import { AppLauncher } from "./applauncher.js";
 import { PowerGroup } from "../../widgets/power_menu.js";
+
+import {
+  scaledScreenHeight,
+  scaledScreenWidth,
+} from "../../scaling.js";
+
 
 
 const { Window, Label, EventBox, Box, Overlay, Scrollable } = Widget;
@@ -102,6 +108,7 @@ const remove_selected = async (button) => {
   }
 };
 
+// var current_page = 0;
 const NierSettingPane = (
   current_page = 0,
   CLICK_TIMEOUT = false,
@@ -115,12 +122,12 @@ const NierSettingPane = (
     hpack: "start",
     vpack: "start",
     classNames: ["nier-settings-container"],
-    css: `min-width: ${SCREEN_WIDTH}px;min-height: ${SCREEN_HEIGHT}px;background-position: ${SCREEN_WIDTH*.5-960/2}px ${SCREEN_HEIGHT/2-720/2}px;background: url("${parentAssetsDir()}/glory-ghost.png") no-repeat center;`, // 960x720 is the image(glory-brown-ghost.png) res
+    css: `min-width: ${scaledScreenWidth}px;min-height: ${scaledScreenHeight}px;background-position: ${scaledScreenWidth*.5-960/2}px ${scaledScreenHeight/2-720/2}px;background: url("${parentAssetsDir()}/glory-ghost.png") no-repeat center;`, // 960x720 is the image(glory-brown-ghost.png) res
 
     setup: (self) =>
       Utils.timeout(1, () => {
         dark.connect("changed",() => {
-          self.css = `min-width: ${SCREEN_WIDTH}px;min-height: ${SCREEN_HEIGHT}px;background-position: ${SCREEN_WIDTH*.5-960/2}px ${SCREEN_HEIGHT/2-720/2}px;background: url("${parentAssetsDir()}/glory-ghost.png") no-repeat center;`; // 960x720 is the image(glory-brown-ghost.png) res
+          self.css = `min-width: ${scaledScreenWidth}px;min-height: ${scaledScreenHeight}px;background-position: ${scaledScreenWidth*.5-960/2}px ${scaledScreenHeight/2-720/2}px;background: url("${parentAssetsDir()}/glory-ghost.png") no-repeat center;`; // 960x720 is the image(glory-brown-ghost.png) res
         });
 
         execAsync(`ags -b bg_settings -q`).then(() => {
@@ -134,7 +141,7 @@ const NierSettingPane = (
           vexpand: false,
           hpack: "start",
           vpack: "start",
-          css: `min-width: ${SCREEN_WIDTH / 4}px;min-height: ${SCREEN_HEIGHT}px`,
+          css: `min-width: ${scaledScreenWidth / 4}px;min-height: ${scaledScreenHeight}px`,
           containerClassNames: ["nier-settings-4-container", "closing"],
           classNames: ["nier-settings-1"],
 
@@ -154,7 +161,7 @@ const NierSettingPane = (
           vexpand: false,
           hpack: "start",
           vpack: "start",
-          css: `min-width: ${SCREEN_WIDTH / 4}px;min-height: ${SCREEN_HEIGHT}px`,
+          css: `min-width: ${scaledScreenWidth / 4}px;min-height: ${scaledScreenHeight}px`,
           containerClassNames: ["nier-settings-3-container", "closing"],
           classNames: ["nier-settings-1"],
 
@@ -166,7 +173,7 @@ const NierSettingPane = (
           vexpand: false,
           hpack: "start",
           vpack: "start",
-          css: `min-width: ${SCREEN_WIDTH / 4}px;min-height: ${SCREEN_HEIGHT}px`,
+          css: `min-width: ${scaledScreenWidth / 4}px;min-height: ${scaledScreenHeight}px`,
           containerClassNames: ["nier-settings-2-container", "closing"],
           classNames: ["nier-settings-1"],
 
@@ -226,12 +233,12 @@ const NierSettingPane = (
         };
 
         let page1 = NierButtonGroup({
-          css: `min-width: ${SCREEN_WIDTH / 4}px;min-height: ${SCREEN_HEIGHT}px;`, // also expands other panes so the bottom part dont glicth out
+          css: `min-width: ${scaledScreenWidth / 4}px;min-height: ${scaledScreenHeight}px;`, // also expands other panes so the bottom part dont glicth out
           containerClassNames: ["nier-settings-1-container"],
           classNames: ["nier-settings-1"],
           connections:[
             [dark, (self) => {
-              self.css = `min-width: ${SCREEN_WIDTH / 4}px;min-height: ${SCREEN_HEIGHT}px;background: url("${dark.value?themedir + '/wallpapers/nier_dark.png':themedir + '/wallpapers/nier_light.png'}")`; // also expands other panes so the bottom part dont glicth out
+              self.css = `min-width: ${scaledScreenWidth / 4}px;min-height: ${scaledScreenHeight}px;background: url("${dark.value?themedir + '/wallpapers/nier_dark.png':themedir + '/wallpapers/nier_light.png'}")`; // also expands other panes so the bottom part dont glicth out
             },"changed"]
           ],
 
@@ -298,19 +305,19 @@ const NierSettingPane = (
         self.pages = [page1, page2, page3, page4];
         self.children = [
           Scrollable({
-            css: `min-width: ${SCREEN_WIDTH / 4}px;min-height: ${SCREEN_HEIGHT}px;`,
+            css: `min-width: ${scaledScreenWidth / 4}px;min-height: ${scaledScreenHeight}px;`,
             child:page1
           }),
           Scrollable({
-            css: `min-width: ${SCREEN_WIDTH / 4}px;min-height: ${SCREEN_HEIGHT}px;`,
+            css: `min-width: ${scaledScreenWidth / 4}px;min-height: ${scaledScreenHeight}px;`,
             child:page2
           }),
           Scrollable({
-            css: `min-width: ${SCREEN_WIDTH / 4}px;min-height: ${SCREEN_HEIGHT}px;`,
+            css: `min-width: ${scaledScreenWidth / 4}px;min-height: ${scaledScreenHeight}px;`,
             child:page3
           }),
           Scrollable({
-            css: `min-width: ${SCREEN_WIDTH / 4}px;min-height: ${SCREEN_HEIGHT}px;`,
+            css: `min-width: ${scaledScreenWidth / 4}px;min-height: ${scaledScreenHeight}px;`,
             child:page4
           }),
         ];
@@ -320,7 +327,8 @@ const NierSettingPane = (
         App,
         (self, windowName, visible) => {
           if (windowName ==  "settings") {
-            print("visibility",visible)
+            print("visibility: " + visible)
+            // print("pages: " + self.pages)
             let containers = Array.from(self.pages).map((child) => {
               // print(child.child)
               return child.child;
@@ -374,9 +382,11 @@ const NierSettingPane = (
     layer: "overlay",
     focusable: true,
     visible: true,
+    keymode: "exclusive",
     
     setup: (self) =>
       Utils.timeout(1, () => {
+        print("current page " + current_page);
         self.connect("key-press-event", (widget, event) => {
           if (event.get_keyval()[1] == Gdk.KEY_Escape) {
             try {
@@ -427,13 +437,14 @@ const NierSettingPane = (
         });
         let [x, _] = await get_cursor();
         print("cursor press", x, current_page);
-        if (x <= (SCREEN_WIDTH / 4) * (current_page + 1)) {
+        if (x <= (scaledScreenWidth / 4) * (current_page + 1)) {
           return;
         }
         try {
           if (current_page == 0) {
             App.toggleWindow("settings");
           } else {
+            print("current page: " + current_page);
             let next_page = panes_container.pages[current_page].child;
             let now_page = panes_container.pages[current_page - 1].child;
 
@@ -468,7 +479,7 @@ const NierSettingPane = (
       child: Overlay({
         child: Box({
           child: Box({}),
-          css: `min-width: ${SCREEN_WIDTH}px;min-height: ${SCREEN_HEIGHT}px;`,
+          css: `min-width: ${scaledScreenWidth}px;min-height: ${scaledScreenHeight}px;`,
         }),
         overlays: [
           panes_container,

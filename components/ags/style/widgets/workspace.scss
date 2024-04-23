@@ -3,73 +3,89 @@
 
 .workspace-button-container.active-no-hover {
   .nier-long-button {
-    @include long-button-hover;
-    label {
-      transition: background 0.3s cubic-bezier(0.15, 0.79, 0, 1);
-      animation: active-label 0.5s cubic-bezier(0.15, 0.79, 0, 1) forwards;
-      animation-delay: 0.3s;
-    }
-    animation: active 0.5s cubic-bezier(0.15, 0.79, 0, 1) forwards;
-    animation-delay: 0.3s;
+    // @include long-button-hover;
+    // label {
+    //   transition: background 0.3s cubic-bezier(0.15, 0.79, 0, 1);
+    //   animation: active-label 0.5s cubic-bezier(0.15, 0.79, 0, 1) forwards;
+    //   animation-delay: 0.3s;
+    // }
+    // animation: active 0.5s cubic-bezier(0.15, 0.79, 0, 1) forwards;
+    // animation-delay: 0.3s;
+    font-size: 10px;
+    color: red;
+
   }
 }
 
 .workspace-button-container.active {
-  .nier-long-button {
-    label {
-      transition: background 0.3s cubic-bezier(0.15, 0.79, 0, 1);
-      animation: active-label 0.5s cubic-bezier(0.15, 0.79, 0, 1) forwards;
-    }
-    animation: active 0.5s cubic-bezier(0.15, 0.79, 0, 1) forwards;
-  }
+  font-size: 10px;
+  // .nier-long-button {
+  //   label {
+  //     transition: background 0.3s cubic-bezier(0.15, 0.79, 0, 1);
+  //     animation: active-label 0.5s cubic-bezier(0.15, 0.79, 0, 1) forwards;
+  //   }
+  //   animation: active 0.5s cubic-bezier(0.15, 0.79, 0, 1) forwards;
+  // }
 }
 
 .active-on-hold,
 .active-no-hover-on-hold {
   .nier-long-button-hover-icon {
     opacity: 1;
+    font-size: 10px;
   }
 }
 
 .workspace-button {
   margin-bottom: 10px;
-  transition: border 0.3s cubic-bezier(0.15, 0.79, 0, 1);
+  // transition: border 0.3s cubic-bezier(0.15, 0.79, 0, 1);
+  font-size: 10px;
+  color: red;
 }
 
 .workspace-button-container {
   .nier-long-button-hover-icon {
     margin-bottom: 10px;
+    font-size: 10px;
   }
-  .nier-long-button {
-    transition: margin 0.1s cubic-bezier(0.15, 0.79, 0, 1);
-  }
+  // .nier-long-button {
+    // transition: margin 0.1s cubic-bezier(0.15, 0.79, 0, 1);
+  // }
+  font-size: 10px;
 }
 
 .workspace-button-container.active,
 .workspace-button-container.active-no-hover {
   .nier-long-button-hover-icon {
     opacity: 1;
+    font-size: 10px;
   }
 }
 
 @keyframes active-label {
+
   0% {
+    font-size: 10px;
     padding-bottom: 8px;
   }
   100% {
+    font-size: 10px;
     padding-bottom: 20px;
   }
 }
 
 @keyframes active {
   0% {
+    font-size: 10px;
     margin-bottom: 10px;
     border: $brown;
   }
   50% {
+    font-size: 10px;
     padding-bottom: 0px;
   }
   100% {
+    font-size: 10px;
     margin-bottom: 0px;
     padding-bottom: 0px;
     border-top: 0px;

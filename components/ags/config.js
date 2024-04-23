@@ -26,83 +26,83 @@ globalThis.WHICH = WHICH;
 let top_bar_height = 0;
 
 
-const top = () =>
-  Box({
-    vertical: true,
-    hexpand: false,
-    classNames: ["top"],
-    css: `min-width: ${SCREEN_WIDTH}px;`,
-    children: [
-      Box({
-        spacing: top_spacing,
-        hpack: "fill",
-        // css: `min-width: ${SCREEN_WIDTH/2}px;`,
-        children: [
-          Scrollable({
-            css: `min-width: ${workspace_width}px;min-height: ${workspace_height}px;`,
-            child:Workspaces({}),
-          }),
-          Button({
-            hpack: "end",
-            hexpand: true,
-            classNames: ["settings-button"],
-            child: Icon({
-              size: top_icon_size,
-              icon: assetsDir() + "/yorha.png",
-            }),
-            setup: (button) => {
-              button.connect("enter-notify-event" , (self) => {
-                let right = button.parent.children[2];
-                button.classNames = arradd(button.classNames, "hover");
-                right.classNames = arradd(right.classNames, "hover");
-              })
-              button.connect("leave-notify-event" , (self) => {
-                let right = button.parent.children[2];
-                button.classNames = arrremove(button.classNames, "hover");
-                right.classNames = arrremove(right.classNames, "hover");
-              })
-            },
-            onClicked: () => {
-              execAsync(`ags -b settings -t settings`)
-            },
-          }),
-          Box({
-            hpack: "start",
-            classNames: ["yorha-right"],
-          }),
-        ],
-      }),
-      NierBorder({
-        classNames: ["under-workspaces"],
-      }),
-    ],
-    setup: (box) => Utils.timeout(1000,async() => {
-      top_bar_height = box.get_allocation().height + 10;
-      while (true) { // in a loop becauses if hyprland config is changed, it resets the reserved space
-        execAsync(`hyprctl keyword monitor ,addreserved,${top_bar_height},${top_bar_height},0,0`).then(print).catch(print);
-        await new Promise((r) => Utils.timeout(5000,r));
-      }
-    }),
-  });
+// const top = () =>
+//   Box({
+//     vertical: true,
+//     hexpand: false,
+//     classNames: ["top"],
+//     css: `min-width: ${SCREEN_WIDTH}px;`,
+//     children: [
+//       Box({
+//         spacing: top_spacing,
+//         hpack: "fill",
+//         // css: `min-width: ${SCREEN_WIDTH/2}px;`,
+//         children: [
+//           Scrollable({
+//             css: `min-width: ${workspace_width}px;min-height: ${workspace_height}px;`,
+//             child:Workspaces({}),
+//           }),
+//           Button({
+//             hpack: "end",
+//             hexpand: true,
+//             classNames: ["settings-button"],
+//             child: Icon({
+//               size: top_icon_size,
+//               icon: assetsDir() + "/yorha.png",
+//             }),
+//             setup: (button) => {
+//               button.connect("enter-notify-event" , (self) => {
+//                 let right = button.parent.children[2];
+//                 button.classNames = arradd(button.classNames, "hover");
+//                 right.classNames = arradd(right.classNames, "hover");
+//               })
+//               button.connect("leave-notify-event" , (self) => {
+//                 let right = button.parent.children[2];
+//                 button.classNames = arrremove(button.classNames, "hover");
+//                 right.classNames = arrremove(right.classNames, "hover");
+//               })
+//             },
+//             onClicked: () => {
+//               execAsync(`ags -b settings -t settings`)
+//             },
+//           }),
+//           Box({
+//             hpack: "start",
+//             classNames: ["yorha-right"],
+//           }),
+//         ],
+//       }),
+//       NierBorder({
+//         classNames: ["under-workspaces"],
+//       }),
+//     ],
+//     setup: (box) => Utils.timeout(1000,async() => {
+//       top_bar_height = box.get_allocation().height + 10;
+//       while (true) { // in a loop becauses if hyprland config is changed, it resets the reserved space
+//         execAsync(`hyprctl keyword monitor ,addreserved,${top_bar_height},${top_bar_height},0,0`).then(print).catch(print);
+//         await new Promise((r) => Utils.timeout(5000,r));
+//       }
+//     }),
+//   });
 
-const Bar = ({ monitor } = {}) => {
-  return Window({
-    name: `bar`,
-    classNames: ["bar"],
-    monitor,
-    margin: [0, 0],
-    anchor: ["top", "left", "right"],
-    exclusivity: "ignore",
-    layer: "bottom",
-    child: Box({
-      css: "margin-top: 10px;",
-      children: [top()],
-    }),
-  });
-};
+// const Bar = ({ monitor } = {}) => {
+//   return Window({
+//     name: `bar`,
+//     classNames: ["bar"],
+//     monitor,
+//     margin: [0, 0],
+//     anchor: ["top", "left", "right"],
+//     exclusivity: "ignore",
+//     layer: "bottom",
+//     child: Box({
+//       css: "margin-top: 10px;",
+//       children: [top()],
+//     }),
+//   });
+// };
 
 execAsync(`ags -b player -c ${App.configDir}/windows/player/player.js`);
-execAsync(`ags -b settings -c ${App.configDir}/windows/settings/settings.js`);
+// execAsync(`ags -b settings -c ${App.configDir}/windows/settings/settings.js`);
 dark.connect("changed", () => {
   print("dark changed",dark.value);
   let colors_css_path = `${App.configDir}/style/color.scss`;
@@ -155,7 +155,7 @@ const BottomBar = ({ monitor } = {}) =>
 export default {
   style: css,
   windows: [
-    Bar(),
+    // Bar(),
     // Bar({ monitor: 1}),
     BottomBar(),
   ],

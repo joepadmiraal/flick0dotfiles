@@ -23,38 +23,39 @@ export const NierBorder = ({
             size: icon_width,
         })),
         connections: [
-            [
-                100,
-                (self) => {
-                    get_cursor()
-                        .then((cursor) => {
-                            let [x,y] = cursor;
-                            if (y_axis) {
-                                ratio = y / SCREEN_HEIGHT;
-                            } else {
-                                ratio = x / SCREEN_WIDTH;
-                            }
-                            let child_index = round((SCREEN_WIDTH/icon_width) * ratio);
-                            // print("child index",child_index)
-                            self.children.forEach((child,j) => {
-                                if (abs(j-child_index) <= 1) {
-                                    if (child.icon == assetsDir() + "/nier-border-full.svg") {
-                                        return;
-                                    }
-                                    child.icon = assetsDir() + "/nier-border-full.svg";
-                                } else {
-                                    if (child.icon == assetsDir() + "/nier-border.svg") {
-                                        return;
-                                    }
-                                    child.icon = assetsDir() + "/nier-border.svg";
-                                }
-                            })
-                    })
-                    .catch((e) => {
-                        print(e)
-                    })
-                },
-            ]
+            //Joep: Disabled because it flickers when scaling is not 1
+            // [
+            //     100,
+            //     (self) => {
+            //         get_cursor()
+            //             .then((cursor) => {
+            //                 let [x,y] = cursor;
+            //                 if (y_axis) {
+            //                     ratio = y / SCREEN_HEIGHT;
+            //                 } else {
+            //                     ratio = x / SCREEN_WIDTH;
+            //                 }
+            //                 let child_index = round((SCREEN_WIDTH/icon_width) * ratio);
+            //                 // print("child index",child_index)
+            //                 self.children.forEach((child,j) => {
+            //                     if (abs(j-child_index) <= 1) {
+            //                         if (child.icon == assetsDir() + "/nier-border-full.svg") {
+            //                             return;
+            //                         }
+            //                         child.icon = assetsDir() + "/nier-border-full.svg";
+            //                     } else {
+            //                         if (child.icon == assetsDir() + "/nier-border.svg") {
+            //                             return;
+            //                         }
+            //                         child.icon = assetsDir() + "/nier-border.svg";
+            //                     }
+            //                 })
+            //         })
+            //         .catch((e) => {
+            //             print(e)
+            //         })
+            //     },
+            // ]
         ]
     })
 });
