@@ -3,9 +3,9 @@ import {
   Utils,
 } from "../imports.js";
 import { NierLongButton, NierButtonGroup } from "../nier/buttons.js";
-import { workspace_workspaces} from "../scaling.js";
+import { scaledScreenWidth, workspace_workspaces } from "../scaling.js";
 
-import { SCREEN_WIDTH, arradd, arrremove, assetsDir } from "../util.js";
+import { arradd, arrremove, assetsDir } from "../util.js";
 
 const { execAsync } = Utils;
 
@@ -41,7 +41,7 @@ let REALLY_HOVERING = false;
 export const Workspaces = () =>
   NierButtonGroup({
     horizontal: true,
-    min_scale: SCREEN_WIDTH,
+    min_scale: scaledScreenWidth,
     classNames: ["workspaces"],
     buttons: Array.from({ length: workspace_workspaces }, (_, i) => i + 1).map((i) => {
       return NierLongButton({

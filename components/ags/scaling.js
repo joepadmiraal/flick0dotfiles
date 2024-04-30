@@ -1,6 +1,6 @@
-import { SCREEN_WIDTH } from "./util.js";
+import { SCREEN_WIDTH, SCREEN_HEIGHT } from "./util.js";
 
-export const scale = 1;
+export const scale = 0.5;
 
 export const settings_title_top = 120*scale;
 export const settings_title_bottom = 50*scale;
@@ -20,5 +20,9 @@ export const button_max_chars = 20*scale;
 export const button_slider_width = 20*scale;
 export const button_slider_padding = 20*scale;
 
-export const workspace_width = SCREEN_WIDTH - 4*button_pointer_size;
+export const scaledScreenHeight = SCREEN_HEIGHT * scale;
+export const scaledScreenWidth = SCREEN_WIDTH * scale;
+
+export const workspace_width = scaledScreenWidth - 4*button_pointer_size;
 export const workspace_height = 65*scale;
+

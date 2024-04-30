@@ -7,6 +7,8 @@ const Widget = await require("widget");
 const Variable = await require("variable");
 const Utils = await import(resource("utils"));
 
+import { scaledScreenWidth, scaledScreenHeight } from "../../scaling.js";
+
 const Hyprland = await service("hyprland");
 
 const { min, max, round, abs, sqrt, random } = Math;
@@ -14,24 +16,12 @@ const { min, max, round, abs, sqrt, random } = Math;
 const { Gdk } = imports.gi;
 
 const { Window, EventBox, Box, Overlay,Scrollable } = Widget;
-const {exec} = Utils;
 
 async function get_cursor() {
   return Hyprland.sendMessage("cursorpos").then((res) => {
     return res.split(",").map((n) => Number(n));
   });
 }
-
-const SCREEN_WIDTH = Number(
-    exec(
-      `bash -c "xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f1 | head -1"`
-    )
-  );
-const SCREEN_HEIGHT = Number(
-    exec(
-      `bash -c "xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f2 | head -1"`
-    )
-  );
 
 const rand_int = (a,b) => round(random()*(b-a)+a);
 const dist_from_center = (x,y,center_x,center_y,width,height) => {
@@ -134,8 +124,8 @@ const NierGeom = ({
   draw_duration = 1000,
   final_draw = true,
   gap = 3,
-  rows = round(SCREEN_HEIGHT/cell_height) + 1,
-  cols = round(SCREEN_WIDTH*2/cell_width) + 1,
+  rows = round(scaledScreenHeight/cell_height) + 1,
+  cols = round(scaledScreenWidth*2/cell_width) + 1,
   cells = Array.from({ length: rows*cols }, (_, i) => {return [0,0 ,0,0 ,0,0 ,0,0, 0,0]}),
 
   opacity_step = 10,
@@ -149,8 +139,8 @@ const NierGeom = ({
       first_update++;
       return
     }
-    let [tmp_cell_x1,tmp_cell_y1] = pos_mapper(anchor_x1.value,anchor_y1.value,SCREEN_WIDTH,SCREEN_HEIGHT,cols,rows);
-    let [tmp_cell_x2,tmp_cell_y2] = pos_mapper(anchor_x2.value,anchor_y2.value,SCREEN_WIDTH,SCREEN_HEIGHT,cols,rows);
+    let [tmp_cell_x1,tmp_cell_y1] = pos_mapper(anchor_x1.value,anchor_y1.value,scaledScreenWidth,scaledScreenHeight,cols,rows);
+    let [tmp_cell_x2,tmp_cell_y2] = pos_mapper(anchor_x2.value,anchor_y2.value,scaledScreenWidth,scaledScreenHeight,cols,rows);
     
     let real_x1 = min(tmp_cell_x1,tmp_cell_x2);
     let real_y1 = min(tmp_cell_y1,tmp_cell_y2);
@@ -289,7 +279,7 @@ const NierGeom = ({
             opacity_step = 2;
 
             let [real_x,real_y] = await get_cursor();
-            let [center_x,center_y] = pos_mapper(real_x,real_y,SCREEN_WIDTH,SCREEN_HEIGHT,cols,rows);
+            let [center_x,center_y] = pos_mapper(real_x,real_y,scaledScreenWidth,scaledScreenHeight,cols,rows);
 
             let max_dist = (max(center_x,rows-center_x)**2 + max(center_y,cols-center_y)**2)**0.5 + 1;
                         while (true) {
@@ -353,7 +343,7 @@ const NierGeom = ({
             opacity_step = 10;
   
             let [real_x,real_y] = await get_cursor();
-            let [center_x,center_y] = pos_mapper(real_x,real_y,SCREEN_WIDTH,SCREEN_HEIGHT,cols,rows);
+            let [center_x,center_y] = pos_mapper(real_x,real_y,scaledScreenWidth,scaledScreenHeight,cols,rows);
   
             let max_dist = (max(center_x,rows-center_x)**2 + max(center_y,cols-center_y)**2)**0.5 + 1;
             

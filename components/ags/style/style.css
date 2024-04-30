@@ -13,11 +13,12 @@
   transition: opacity 0.3s ease-in-out; }
 
 .nier-long-button label {
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-family: FOT-Rodin Pro M, sans-serif;
   background: linear-gradient(90deg, rgba(72, 70, 61, 0.25) 0%, rgba(72, 70, 61, 0.25) 50%, #48463d 50%, #48463d 100%);
   background-size: 200%;
   color: #48463d;
+  min-width: 110px;
   padding: 8px 8px 7px;
   transition: background 0.1s cubic-bezier(0.15, 0.79, 0, 1), border-color 0.3s ease-in-out, color 0.3s ease-in-out, box-shadow 0.4s ease-in-out; }
 
@@ -518,11 +519,12 @@
   transition: opacity 0.3s ease-in-out; }
 
 .nier-long-button label {
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-family: FOT-Rodin Pro M, sans-serif;
   background: linear-gradient(90deg, rgba(72, 70, 61, 0.25) 0%, rgba(72, 70, 61, 0.25) 50%, #48463d 50%, #48463d 100%);
   background-size: 200%;
   color: #48463d;
+  min-width: 110px;
   padding: 8px 8px 7px;
   transition: background 0.1s cubic-bezier(0.15, 0.79, 0, 1), border-color 0.3s ease-in-out, color 0.3s ease-in-out, box-shadow 0.4s ease-in-out; }
 
@@ -813,12 +815,12 @@
 .nier-settings-2-container,
 .nier-settings-3-container,
 .nier-settings-4-container {
-  min-width: calc(2560px / 4); }
+  min-width: calc(1920px / 4); }
 
 @keyframes container_enter {
   0% {
-    margin-right: 2560px;
-    margin-left: calc(-1 * 2560px); }
+    margin-right: 1920px;
+    margin-left: calc(-1 * 1920px); }
   100% {
     margin-right: 0px;
     margin-left: 0px; } }
@@ -840,26 +842,26 @@
   transition: margin 0.2s cubic-bezier(0.15, 0.79, 0, 1), opacity 1s ease; }
 
 .nier-settings-1-container.closing {
-  margin-right: calc(2560px / 4);
-  margin-left: calc(-1 * 2560px / 4);
+  margin-right: calc(1920px / 4);
+  margin-left: calc(-1 * 1920px / 4);
   opacity: 0;
   transition: margin 0.2s cubic-bezier(0.15, 0.79, 0, 1), opacity 0.2s ease; }
 
 .nier-settings-2-container.closing {
-  margin-right: calc(2560px/ 4);
-  margin-left: calc(-1 * 2560px/ 4);
+  margin-right: calc(1920px/ 4);
+  margin-left: calc(-1 * 1920px/ 4);
   opacity: 0;
   transition: margin 0.4s cubic-bezier(0.15, 0.79, 0, 1), opacity 0.4s ease; }
 
 .nier-settings-3-container.closing {
-  margin-right: calc(2560px / 4);
-  margin-left: calc(-1 * 2560px / 4);
+  margin-right: calc(1920px / 4);
+  margin-left: calc(-1 * 1920px / 4);
   opacity: 0;
   transition: margin 0.6s cubic-bezier(0.15, 0.79, 0, 1), opacity 0.6s ease; }
 
 .nier-settings-4-container.closing {
-  margin-right: calc(2560px / 4);
-  margin-left: calc(-1 * 2560px / 4);
+  margin-right: calc(1920px / 4);
+  margin-left: calc(-1 * 1920px / 4);
   opacity: 0;
   transition: margin 0.8s cubic-bezier(0.15, 0.79, 0, 1), opacity 0.8s ease; }
 

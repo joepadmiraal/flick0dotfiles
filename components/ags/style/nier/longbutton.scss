@@ -1,4 +1,5 @@
 @import "../color";
+@import "../data";
 
 $accent_border: 3px;
 $accent_border_dist: 4px;
@@ -39,7 +40,7 @@ $button_spacing_horizontal: 5px;
 
 // the actual button looking thing ( is actuaally a label :0 )
 .nier-long-button label {
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-family: FOT-Rodin Pro M, sans-serif;
   background: linear-gradient(
     90deg,
@@ -50,6 +51,10 @@ $button_spacing_horizontal: 5px;
   );
   background-size: 200%;
   color: $brown;
+  
+  //joep: we need to determinie if/how we want to auto-scale this, 190px seems good for 2x scaling
+  min-width: 110px;
+
   padding: 8px 8px 7px;
   transition: background 0.1s cubic-bezier(0.15, 0.79, 0, 1),
     border-color 0.3s ease-in-out, color 0.3s ease-in-out,

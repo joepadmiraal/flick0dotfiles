@@ -1,7 +1,7 @@
 import { Widget } from "../imports.js"
-import { button_pointer_size, nier_border_size } from "../scaling.js";
+import { scaledScreenHeight, scaledScreenWidth, nier_border_size } from "../scaling.js";
 
-import { SCREEN_WIDTH, get_cursor, assetsDir, SCREEN_HEIGHT } from "../util.js"
+import { get_cursor, assetsDir } from "../util.js"
 
 const { Box, Icon,Scrollable } = Widget
 
@@ -18,7 +18,7 @@ export const NierBorder = ({
     css: `min-width: ${100}px;min-height: ${round(icon_width/3)}px;`,
     // hscroll: "always",
     child:Box({
-        children: Array.from({length: SCREEN_WIDTH/icon_width + 1},(_,i) => Icon({
+        children: Array.from({length: scaledScreenWidth/icon_width + 1},(_,i) => Icon({
             icon: assetsDir() + "/nier-border-full.svg",
             size: icon_width,
         })),
@@ -30,12 +30,12 @@ export const NierBorder = ({
                         .then((cursor) => {
                             let [x,y] = cursor;
                             if (y_axis) {
-                                ratio = y / SCREEN_HEIGHT;
+                                ratio = y / scaledScreenHeight;
                             } else {
-                                ratio = x / SCREEN_WIDTH;
+                                ratio = x / scaledScreenWidth;
                             }
-                            let child_index = round((SCREEN_WIDTH/icon_width) * ratio);
-                            // print("child index",child_index)
+                            let child_index = round((scaledScreenWidth/icon_width) * ratio);
+                            print("child index",child_index)
                             self.children.forEach((child,j) => {
                                 if (abs(j-child_index) <= 1) {
                                     if (child.icon == assetsDir() + "/nier-border-full.svg") {

@@ -7,10 +7,13 @@ import {
 import { NierButton, NierButtonGroup } from "../../nier/buttons.js";
 
 import {
-  SCREEN_HEIGHT,
   arradd,
   arrremove,
 } from "../../util.js";
+
+import {
+  scaledScreenHeight,
+} from "../../scaling.js";
 
 const { Box, Label,Scrollable, Icon } = Widget;
 const { Pango } = imports.gi;
@@ -59,7 +62,7 @@ export const AppLauncher = ({
         hexpand: true,
         hpack: "fill",
         classNames: ["app-launcher-scroll"],
-        css: `min-height: ${Math.round(SCREEN_HEIGHT/3)}px;`,
+        css: `min-height: ${Math.round(scaledScreenHeight/3)}px;`,
 
         child: Box({
           vertical: true,

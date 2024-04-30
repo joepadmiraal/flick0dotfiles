@@ -1,8 +1,7 @@
 import { Widget, Bluetooth, Variable } from "../imports.js";
 import { NierButton } from "../nier/buttons.js";
 import { NierDropDownButton } from "../nier/dropdown.js";
-import { button_label_2 , settings_title_bottom, settings_title_top } from "../scaling.js";
-import { SCREEN_WIDTH } from "../util.js";
+import { button_label_2 , settings_title_bottom, settings_title_top, scaledScreenWidth } from "../scaling.js";
 
 const { Label } = Widget;
 
@@ -19,7 +18,7 @@ export const BluetoothGroup = ({
       label: "enabled",
       current: enabled,
       options: Variable(["YES", "NO"], {}),
-      popup_x_offset: SCREEN_WIDTH / 4,
+      popup_x_offset: scaledScreenWidth / 4,
       connections: [
         [
           enabled,
@@ -51,7 +50,7 @@ export const BluetoothGroup = ({
                 label: device.name,
                 current: device_current,
                 options: device_options,
-                popup_x_offset: (SCREEN_WIDTH / 4) * 2,
+                popup_x_offset: (scaledScreenWidth / 4) * 2,
                 connections: [
                   [
                     device_current,

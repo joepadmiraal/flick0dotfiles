@@ -1,7 +1,7 @@
 import { Widget, App, Utils } from "../../imports.js";
 import { NierButtonGroup, NierButton } from "../../nier/buttons.js";
-import { settings_title_bottom, settings_title_top } from "../../scaling.js";
-import { SCREEN_WIDTH, SCREEN_HEIGHT, arradd, arrremove, get_cursor, css} from "../../util.js";
+import { settings_title_bottom, settings_title_top, scale, scaledScreenHeight, scaledScreenWidth} from "../../scaling.js";
+import { arradd, arrremove, get_cursor, css} from "../../util.js";
 import { BluetoothGroup } from "../../widgets/bluetooth_group.js";
 import { Info } from "../../widgets/info.js";
 
@@ -9,7 +9,6 @@ import { VolumeGroup } from "../../widgets/volume_group.js";
 import { WifiGroup } from "../../widgets/wifi_group.js";
 import { AppLauncher } from "./applauncher.js";
 import { PowerGroup } from "../../widgets/power_menu.js";
-
 
 const { Window, Label, EventBox, Box, Overlay, Scrollable } = Widget;
 const { execAsync } = Utils;
@@ -115,12 +114,12 @@ const NierSettingPane = (
     hpack: "start",
     vpack: "start",
     classNames: ["nier-settings-container"],
-    css: `min-width: ${SCREEN_WIDTH}px;min-height: ${SCREEN_HEIGHT}px;background-position: ${SCREEN_WIDTH*.5-960/2}px ${SCREEN_HEIGHT/2-720/2}px;background: url("${parentAssetsDir()}/glory-ghost.png") no-repeat center;`, // 960x720 is the image(glory-brown-ghost.png) res
+    css: `min-width: ${scaledScreenWidth}px;min-height: ${scaledScreenHeight}px;background-position: ${scaledScreenWidth*.5-960/2}px ${scaledScreenHeight/2-720/2}px;background: url("${parentAssetsDir()}/glory-ghost.png") no-repeat center;`, // 960x720 is the image(glory-brown-ghost.png) res
 
     setup: (self) =>
       Utils.timeout(1, () => {
         dark.connect("changed",() => {
-          self.css = `min-width: ${SCREEN_WIDTH}px;min-height: ${SCREEN_HEIGHT}px;background-position: ${SCREEN_WIDTH*.5-960/2}px ${SCREEN_HEIGHT/2-720/2}px;background: url("${parentAssetsDir()}/glory-ghost.png") no-repeat center;`; // 960x720 is the image(glory-brown-ghost.png) res
+          self.css = `min-width: ${scaledScreenWidth}px;min-height: ${scaledScreenHeight}px;background-position: ${scaledScreenWidth*.5-960/2}px ${scaledScreenHeight/2-720/2}px;background: url("${parentAssetsDir()}/glory-ghost.png") no-repeat center;`; // 960x720 is the image(glory-brown-ghost.png) res
         });
 
         execAsync(`ags -b bg_settings -q`).then(() => {
@@ -134,7 +133,7 @@ const NierSettingPane = (
           vexpand: false,
           hpack: "start",
           vpack: "start",
-          css: `min-width: ${SCREEN_WIDTH / 4}px;min-height: ${SCREEN_HEIGHT}px`,
+          css: `min-width: ${scaledScreenWidth / 4}px;min-height: ${scaledScreenHeight}px`,
           containerClassNames: ["nier-settings-4-container", "closing"],
           classNames: ["nier-settings-1"],
 
@@ -154,7 +153,7 @@ const NierSettingPane = (
           vexpand: false,
           hpack: "start",
           vpack: "start",
-          css: `min-width: ${SCREEN_WIDTH / 4}px;min-height: ${SCREEN_HEIGHT}px`,
+          css: `min-width: ${scaledScreenWidth / 4}px;min-height: ${scaledScreenHeight}px`,
           containerClassNames: ["nier-settings-3-container", "closing"],
           classNames: ["nier-settings-1"],
 
@@ -166,7 +165,7 @@ const NierSettingPane = (
           vexpand: false,
           hpack: "start",
           vpack: "start",
-          css: `min-width: ${SCREEN_WIDTH / 4}px;min-height: ${SCREEN_HEIGHT}px`,
+          css: `min-width: ${scaledScreenWidth / 4}px;min-height: ${scaledScreenHeight}px`,
           containerClassNames: ["nier-settings-2-container", "closing"],
           classNames: ["nier-settings-1"],
 
@@ -226,12 +225,12 @@ const NierSettingPane = (
         };
 
         let page1 = NierButtonGroup({
-          css: `min-width: ${SCREEN_WIDTH / 4}px;min-height: ${SCREEN_HEIGHT}px;`, // also expands other panes so the bottom part dont glicth out
+          css: `min-width: ${scaledScreenWidth / 4}px;min-height: ${800}px;`, // also expands other panes so the bottom part dont glicth out
           containerClassNames: ["nier-settings-1-container"],
           classNames: ["nier-settings-1"],
           connections:[
             [dark, (self) => {
-              self.css = `min-width: ${SCREEN_WIDTH / 4}px;min-height: ${SCREEN_HEIGHT}px;background: url("${dark.value?themedir + '/wallpapers/nier_dark.png':themedir + '/wallpapers/nier_light.png'}")`; // also expands other panes so the bottom part dont glicth out
+              self.css = `min-width: ${scaledScreenWidth / 4}px;min-height: ${scaledScreenHeight}px;background: url("${dark.value?themedir + '/wallpapers/nier_dark.png':themedir + '/wallpapers/nier_light.png'}")`; // also expands other panes so the bottom part dont glicth out
             },"changed"]
           ],
 
@@ -244,7 +243,7 @@ const NierSettingPane = (
             }),
             NierButton({
               useAssetsDir: parentAssetsDir,
-              font_size: 30,
+              font_size: 30 * scale,
               label: "SOUND",
               handleClick: async (self, event) => {
                 page1_selected = ensure_only_selected(self, page1_selected);
@@ -255,7 +254,7 @@ const NierSettingPane = (
             }),
             NierButton({
               useAssetsDir: parentAssetsDir,
-              font_size: 30,
+              font_size: 30 * scale,
               label: "WIFI",
               handleClick: async (self, event) => {
                 await go_page2(wifi_page(), self).catch((e) => {
@@ -265,7 +264,7 @@ const NierSettingPane = (
             }),
             NierButton({
               useAssetsDir: parentAssetsDir,
-              font_size: 30,
+              font_size: 30 * scale,
               label: "BLUETOOTH",
               handleClick: async (self, event) => {
                 await go_page2(bluetooth_page(go_page3), self).catch(
@@ -277,7 +276,7 @@ const NierSettingPane = (
             }),
             NierButton({
               useAssetsDir: parentAssetsDir,
-              font_size: 30,
+              font_size: 30 * scale,
               label: "POWER",
               handleClick: async (self, event) => {
                 await go_page2(power_page(), self).catch((e) => {
@@ -298,19 +297,19 @@ const NierSettingPane = (
         self.pages = [page1, page2, page3, page4];
         self.children = [
           Scrollable({
-            css: `min-width: ${SCREEN_WIDTH / 4}px;min-height: ${SCREEN_HEIGHT}px;`,
+            css: `min-width: ${scaledScreenWidth / 4}px;min-height: ${scaledScreenHeight}px;`,
             child:page1
           }),
           Scrollable({
-            css: `min-width: ${SCREEN_WIDTH / 4}px;min-height: ${SCREEN_HEIGHT}px;`,
+            css: `min-width: ${scaledScreenWidth / 4}px;min-height: ${scaledScreenHeight}px;`,
             child:page2
           }),
           Scrollable({
-            css: `min-width: ${SCREEN_WIDTH / 4}px;min-height: ${SCREEN_HEIGHT}px;`,
+            css: `min-width: ${scaledScreenWidth / 4}px;min-height: ${scaledScreenHeight}px;`,
             child:page3
           }),
           Scrollable({
-            css: `min-width: ${SCREEN_WIDTH / 4}px;min-height: ${SCREEN_HEIGHT}px;`,
+            css: `min-width: ${scaledScreenWidth / 4}px;min-height: ${scaledScreenHeight}px;`,
             child:page4
           }),
         ];
@@ -427,7 +426,7 @@ const NierSettingPane = (
         });
         let [x, _] = await get_cursor();
         print("cursor press", x, current_page);
-        if (x <= (SCREEN_WIDTH / 4) * (current_page + 1)) {
+        if (x <= (scaledScreenWidth / 4) * (current_page + 1)) {
           return;
         }
         try {
@@ -468,7 +467,7 @@ const NierSettingPane = (
       child: Overlay({
         child: Box({
           child: Box({}),
-          css: `min-width: ${SCREEN_WIDTH}px;min-height: ${SCREEN_HEIGHT}px;`,
+          css: `min-width: ${scaledScreenWidth}px;min-height: ${scaledScreenHeight}px;`,
         }),
         overlays: [
           panes_container,

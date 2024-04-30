@@ -1,3 +1,5 @@
+import { scaledScreenHeight, scaledScreenWidth} from "../../scaling.js";
+
 const resource = (file) => `resource:///com/github/Aylur/ags/${file}.js`;
 const require = async (file) => (await import(resource(file))).default;
 
@@ -8,20 +10,8 @@ const Utils = await import(resource("utils"));
 const { max, round, abs, sqrt, random } = Math;
 
 const { Window, EventBox, Overlay, Scrollable } = Widget;
-const {exec} = Utils;
 
 globalThis.App = App;
-
-const SCREEN_WIDTH = Number(
-    exec(
-      `bash -c "xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f1 | head -1"`
-    )
-  );
-const SCREEN_HEIGHT = Number(
-    exec(
-      `bash -c "xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f2 | head -1"`
-    )
-  );
 
 const rand_int = (a,b) => round(random()*(b-a)+a);
 const dist_from_center = (x,y,center_x,center_y,width,height) => {
@@ -111,8 +101,8 @@ const NierGeom = ({
   draw_duration_1 = 1000,
   final_draw_1 = true,
   gap = 0,
-  rows = round(SCREEN_HEIGHT/cell_height) + 1,
-  cols = round(SCREEN_WIDTH*2/cell_width) + 1,
+  rows = round(scaledScreenHeight/cell_height) + 1,
+  cols = round(scaledScreenWidth*2/cell_width) + 1,
   cells_1 = Array.from({ length: rows*cols }, (_, i) => {return [0,0 ,0,0 ,0,0 ,0,0, 0,0]}),
 
   opacity_step = 10,

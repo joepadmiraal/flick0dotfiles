@@ -6,18 +6,20 @@ import {
 } from "./imports.js";
 
 
-import { arradd, arrremove, css, scss, assetsDir, dark, themedir,SCREEN_WIDTH, SCREEN_HEIGHT} from "./util.js";
+import { arradd, arrremove, css, scss, assetsDir, dark, themedir } from "./util.js";
 import { Workspaces } from "./widgets/workspace.js";
 import { NierBorder } from "./widgets/nier_border.js";
-import { button_pointer_size, top_icon_size, top_spacing, workspace_height, workspace_width } from "./scaling.js";
+import { top_icon_size, top_spacing, workspace_height, workspace_width, scale, scaledScreenWidth, scaledScreenHeight } from "./scaling.js";
 
 const { exec, execAsync } = Utils;
 const { Box, Window, Button, Icon, Scrollable } = Widget;
 
+console.log("config starting");
 
-Utils.writeFile(`$screen_width:${SCREEN_WIDTH}px;$screen_height:${SCREEN_HEIGHT}px;`,`${App.configDir}/style/data.scss`).then(() => {
-  print("wrote ",`${App.configDir}/style/data.scss`,`$screen_width:${SCREEN_WIDTH}px;$screen_height:${SCREEN_HEIGHT}px;`)
+Utils.writeFile(`$screen_width:${scaledScreenWidth}px;$screen_height:${scaledScreenHeight}px;$scale:${scale};`,`${App.configDir}/style/data.scss`).then(() => {
+  print("wrote ",`${App.configDir}/style/data.scss`,`$screen_width:${scaledScreenWidth}px;$screen_height:${scaledScreenHeight}px;`)
   exec(`sassc ${scss} ${css}`);
+  print(`sassc ${scss} ${css}`);
 }).catch(print);
 
 const WHICH = "nier";
@@ -31,12 +33,12 @@ const top = () =>
     vertical: true,
     hexpand: false,
     classNames: ["top"],
-    css: `min-width: ${SCREEN_WIDTH}px;`,
+    css: `min-width: ${scaledScreenWidth}px;`,
     children: [
       Box({
         spacing: top_spacing,
         hpack: "fill",
-        // css: `min-width: ${SCREEN_WIDTH/2}px;`,
+        // css: `min-width: ${scaledScreenWidth/2}px;`,
         children: [
           Scrollable({
             css: `min-width: ${workspace_width}px;min-height: ${workspace_height}px;`,

@@ -1,7 +1,7 @@
 import { Widget, Network, Variable } from "../imports.js";
 import { NierDropDownButton } from "../nier/dropdown.js";
-import { button_label_2, settings_title_bottom, settings_title_top } from "../scaling.js";
-import { SCREEN_WIDTH,assetsDir } from "../util.js";
+import { button_label_2, scaledScreenWidth, settings_title_bottom, settings_title_top } from "../scaling.js";
+import { assetsDir } from "../util.js";
 
 const { Label } = Widget;
 
@@ -20,7 +20,7 @@ export const WifiGroup = ({
       label: "enabled",
       current: enabled,
       options: Variable(["YES", "NO"], {}),
-      popup_x_offset: SCREEN_WIDTH / 4,
+      popup_x_offset: scaledScreenWidth / 4,
       connections: [
         [
           enabled,
@@ -36,7 +36,7 @@ export const WifiGroup = ({
       label: "connect",
       current: current_ssid,
       options: current_networks,
-      popup_x_offset: SCREEN_WIDTH / 4,
+      popup_x_offset: scaledScreenWidth / 4,
       connections: [
         [
           10000,
